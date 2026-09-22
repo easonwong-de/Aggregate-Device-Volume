@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "2600"
+   LastUpgradeVersion = "2700"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CABDF1142590FD56006F420A"
-               BuildableName = "AggregateVolumeMenu.app"
+               BuildableName = "Aggregate Device Volume.app"
                BlueprintName = "AggregateVolumeMenu"
                ReferencedContainer = "container:AggregateVolumeMenu.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CABDF1142590FD56006F420A"
-            BuildableName = "AggregateVolumeMenu.app"
+            BuildableName = "Aggregate Device Volume.app"
             BlueprintName = "AggregateVolumeMenu"
             ReferencedContainer = "container:AggregateVolumeMenu.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CABDF1142590FD56006F420A"
-            BuildableName = "AggregateVolumeMenu.app"
+            BuildableName = "Aggregate Device Volume.app"
             BlueprintName = "AggregateVolumeMenu"
             ReferencedContainer = "container:AggregateVolumeMenu.xcodeproj">
          </BuildableReference>

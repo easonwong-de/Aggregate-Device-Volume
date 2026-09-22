@@ -1,0 +1,33 @@
+{
+  "fill" : {
+    "automatic-gradient" : "display-p3:0.19830,0.41421,0.78441,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "hifispeaker.and.homepod.mini.fill.svg",
+          "name" : "hifispeaker.and.homepod.mini.fill",
+          "position" : {
+            "scale" : 28,
+            "translation-in-points" : [
+              16,
+              26
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.3
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}
