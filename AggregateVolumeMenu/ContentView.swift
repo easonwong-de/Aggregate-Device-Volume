@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RiveRuntime
 import MediaRemoteAdapter
 
 struct ContentView: View {
@@ -14,7 +13,6 @@ struct ContentView: View {
     @StateObject private var mediaManager = MediaManager.shared
     @State private var isHoveringSlider = false
     @State private var hoveredDevice: AudioDevice?
-    @StateObject private var riveViewModel = RiveViewModel(fileName: "cat", stateMachineName: "State Machine 1")
     
     var volumePercentage: Int {
         Int(audioManager.currentVolume * 100)
@@ -168,21 +166,6 @@ struct ContentView: View {
         }
         .frame(width: 320, height: 540)
         .background(VisualEffectView())
-        .overlay(
-            // Rive animation as overlay covering entire window for mouse tracking
-            ZStack {
-                riveViewModel.view()
-                    .frame(width: 320, height: 420)
-                    .scaleEffect(0.4, anchor: .bottomLeading)
-                    .allowsHitTesting(true)
-                
-                // Transparent overlay to ensure other UI elements remain interactive
-                Color.clear
-                    .frame(width: 320, height: 420)
-                    .allowsHitTesting(false)
-            }
-                .frame(width: 320, height: 420)
-        )
         .onAppear {
             audioManager.refreshDevices()
             audioManager.refreshCurrentDevice()

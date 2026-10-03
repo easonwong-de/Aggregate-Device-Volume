@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		018ECBF22E8C382400210E72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018ECBF12E8C382000210E72 /* ContentView.swift */; };
 		018ECBF62E8C3A8600210E72 /* AggregateVolumeMenuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018ECBF52E8C3A8000210E72 /* AggregateVolumeMenuApp.swift */; };
-		01D8DA5B2E8C716500B05A3A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 01D8DA5A2E8C716500B05A3A /* RiveRuntime */; };
-		01D8DA5F2E8C73F700B05A3A /* cat.riv in Resources */ = {isa = PBXBuildFile; fileRef = 01D8DA5E2E8C73F700B05A3A /* cat.riv */; };
 		9B7739A330630D4100F5F58D /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 9B7739A230630D4100F5F58D /* AppIcon.icon */; };
 		CAB8E5D82E9590880051E084 /* MediaRemoteAdapter in Frameworks */ = {isa = PBXBuildFile; productRef = CAB8E5D72E9590880051E084 /* MediaRemoteAdapter */; };
 		CAB8E5DA2E9592560051E084 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB8E5D92E9592560051E084 /* MediaManager.swift */; };
@@ -22,7 +20,6 @@
 /* Begin PBXFileReference section */
 		018ECBF12E8C382000210E72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		018ECBF52E8C3A8000210E72 /* AggregateVolumeMenuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregateVolumeMenuApp.swift; sourceTree = "<group>"; };
-		01D8DA5E2E8C73F700B05A3A /* cat.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat.riv; sourceTree = "<group>"; };
 		9B7739A13062FEA600F5F58D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9B7739A230630D4100F5F58D /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		CAB8E5D92E9592560051E084 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
@@ -39,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01D8DA5B2E8C716500B05A3A /* RiveRuntime in Frameworks */,
 				CAB8E5D82E9590880051E084 /* MediaRemoteAdapter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,7 +72,6 @@
 				CABDF11C2590FD57006F420A /* Assets.xcassets */,
 				CABDF1212590FD57006F420A /* Info.plist */,
 				CABDF1222590FD57006F420A /* AggregateVolumeMenu.entitlements */,
-				01D8DA5E2E8C73F700B05A3A /* cat.riv */,
 			);
 			path = AggregateVolumeMenu;
 			sourceTree = "<group>";
@@ -126,7 +121,6 @@
 			);
 			mainGroup = CABDF10C2590FD56006F420A;
 			packageReferences = (
-				01D8DA592E8C716500B05A3A /* XCRemoteSwiftPackageReference "rive-ios" */,
 				CAB8E5D62E9590880051E084 /* XCRemoteSwiftPackageReference "mediaremote-adapter" */,
 			);
 			productRefGroup = CABDF1162590FD56006F420A /* Products */;
@@ -144,7 +138,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABDF11D2590FD57006F420A /* Assets.xcassets in Resources */,
-				01D8DA5F2E8C73F700B05A3A /* cat.riv in Resources */,
 				9B7739A330630D4100F5F58D /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,14 +367,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		01D8DA592E8C716500B05A3A /* XCRemoteSwiftPackageReference "rive-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rive-app/rive-ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.11.4;
-			};
-		};
 		CAB8E5D62E9590880051E084 /* XCRemoteSwiftPackageReference "mediaremote-adapter" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ejbills/mediaremote-adapter.git";
@@ -393,11 +378,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		01D8DA5A2E8C716500B05A3A /* RiveRuntime */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 01D8DA592E8C716500B05A3A /* XCRemoteSwiftPackageReference "rive-ios" */;
-			productName = RiveRuntime;
-		};
 		CAB8E5D72E9590880051E084 /* MediaRemoteAdapter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAB8E5D62E9590880051E084 /* XCRemoteSwiftPackageReference "mediaremote-adapter" */;
