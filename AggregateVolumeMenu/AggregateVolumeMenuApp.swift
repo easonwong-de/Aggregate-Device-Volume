@@ -36,11 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: 30)
-        
-        if let button = statusItem?.button {
-            updateMenuBarIcon()
-        }
-        
+        updateMenuBarIcon()
         setupMenu()
     }
     

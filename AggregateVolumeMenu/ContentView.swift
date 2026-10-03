@@ -187,9 +187,10 @@ struct DeviceRow: View {
         Button(action: action) {
             HStack(spacing: 10) {
                 // Selection Indicator
-                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 15))
-                    .foregroundStyle(isHovered ? Color.white : (isSelected ? Color.accentColor : Color.secondary.opacity(0.4)))
+                Image(systemName: "checkmark")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .opacity(isSelected ? 1 : 0)
                     .frame(width: 16, height: 20)
                 
                 // Device Icon
@@ -211,7 +212,7 @@ struct DeviceRow: View {
             .padding(.vertical, 4)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isHovered ? Color.accentColor : (isSelected ? Color.accentColor.opacity(0.1) : Color.clear))
+                    .fill(isHovered ? Color.accentColor : Color.clear)
             )
             .contentShape(Rectangle())
         }
