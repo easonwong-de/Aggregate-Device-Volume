@@ -18,13 +18,14 @@ struct AggregateVolumeMenuApp: App {
     }
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem?
-    private var popover: NSPopover?
+    private var menu: NSMenu?
+    private var hostingView: NSHostingView<ContentView>?
     private var audioManager = AudioDeviceManager.shared
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusItem()
-        setupPopover()
         setupMediaKeyHandling()
         observeVolumeChangeNotifications()
     }
@@ -38,9 +39,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let button = statusItem?.button {
             updateMenuBarIcon()
-            button.action = #selector(togglePopover)
-            button.target = self
-            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        }
+        
+        setupMenu()
+    }
+    
+    private func setupMenu() {
+        let menu = NSMenu()
+        menu.delegate = self
+        
+        let hosting = NSHostingView(rootView: ContentView())
+        let item = NSMenuItem()
+        item.view = hosting
+        menu.addItem(item)
+        
+        self.menu = menu
+        hostingView = hosting
+        statusItem?.menu = menu
+    }
+    
+    func menuWillOpen(_ menu: NSMenu) {
+        audioManager.refreshDevices()
+        audioManager.refreshCurrentDevice()
+        updateMenuBarIcon()
+        
+        if let hostingView = hostingView {
+            hostingView.layoutSubtreeIfNeeded()
+            let fittingSize = hostingView.fittingSize
+            hostingView.frame = NSRect(x: 0, y: 0, width: 320, height: ceil(fittingSize.height))
         }
     }
     
@@ -87,14 +113,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         button.toolTip = tooltipComponents.joined(separator: "\n")
     }
     
-    private func setupPopover() {
-        popover = NSPopover()
-        popover?.contentSize = NSSize(width: 320, height: 420)
-        popover?.behavior = .transient
-        popover?.animates = true
-        popover?.contentViewController = NSHostingController(rootView: ContentView())
-    }
-    
     private func setupMediaKeyHandling() {
         NSEvent.addGlobalMonitorForEvents(matching: .systemDefined) { event in
             self.handleMediaKey(event: event)
@@ -129,21 +147,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 
             default:
                 break
-            }
-        }
-    }
-    
-    @objc private func togglePopover() {
-        guard let button = statusItem?.button else { return }
-        
-        if let popover = popover {
-            if popover.isShown {
-                popover.performClose(nil)
-            } else {
-                audioManager.refreshCurrentDevice()
-                updateMenuBarIcon()
-                popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-                NSApp.activate(ignoringOtherApps: true)
             }
         }
     }

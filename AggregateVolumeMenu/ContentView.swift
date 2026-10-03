@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var audioManager = AudioDeviceManager.shared
-    @State private var isHoveringSlider = false
     @State private var hoveredDevice: AudioDevice?
     
     var volumePercentage: Int {
@@ -28,91 +27,69 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Header with Volume Control
-            VStack(spacing: 16) {
+            VStack(spacing: 14) {
                 // Current Device Display
-                if let currentDevice = audioManager.currentDevice {
-                    HStack {
-                        Image(systemName: "hifispeaker.2.fill")
-                            .foregroundColor(.accentColor)
-                            .font(.system(size: 14))
-                        
-                        Text(currentDevice.name)
-                            .font(.system(size: 13, weight: .medium))
-                            .lineLimit(1)
-                        
-                        Spacer()
-                        
-                        Text("\(volumePercentage)%")
-                            .font(.system(size: 11, weight: .semibold, design: .rounded))
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(Color.secondary.opacity(0.15))
-                            .cornerRadius(6)
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 16)
-                }
-                
-                // Volume Slider Section
-                VStack(spacing: 12) {
-                    HStack(spacing: 12) {
-                        // Mute Button
-                        Button(action: { audioManager.toggleMute() }) {
-                            Image(systemName: volumeIcon)
-                                .font(.system(size: 16))
-                                .foregroundColor(audioManager.isMuted ? .red : .primary)
-                                .frame(width: 24, height: 24)
-                        }
-                        .buttonStyle(.plain)
-                        .help(audioManager.isMuted ? "Unmute" : "Mute")
-                        
-                        // Volume Slider
-                        GeometryReader { geometry in
-                            ZStack(alignment: .leading) {
-                                // Background Track
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(Color.primary.opacity(0.1))
-                                    .frame(height: 6)
-                                
-                                // Filled Track
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(audioManager.isMuted ? Color.red.opacity(0.5) : Color.accentColor)
-                                    .frame(width: geometry.size.width * CGFloat(audioManager.currentVolume), height: 6)
-                                
-                                // Slider Thumb
-                                Circle()
-                                    .fill(audioManager.isMuted ? Color.red : Color.accentColor)
-                                    .frame(width: isHoveringSlider ? 14 : 12, height: isHoveringSlider ? 14 : 12)
-                                    .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
-                                    .offset(x: geometry.size.width * CGFloat(audioManager.currentVolume) - 6)
-                            }
-                            .frame(height: 20)
-                            .contentShape(Rectangle())
-                            .onHover { hovering in
-                                isHoveringSlider = hovering
-                            }
-                            .gesture(
-                                DragGesture(minimumDistance: 0)
-                                    .onChanged { value in
-                                        let newVolume = Float(value.location.x / geometry.size.width)
-                                        audioManager.setCurrentVolume(max(0, min(1, newVolume)))
-                                    }
-                            )
-                        }
+                HStack {
+                    Image(systemName: audioManager.currentDevice?.iconName ?? "hifispeaker")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 14))
+                        .frame(width: 20, height: 20)
+                    
+                    Text(audioManager.currentDevice?.name ?? "No Output Device")
+                        .font(.system(size: 13, weight: .medium))
+                        .lineLimit(1)
                         .frame(height: 20)
-                        
-                        // Max Volume Icon
-                        Image(systemName: "speaker.wave.3.fill")
-                            .font(.system(size: 16))
-                            .foregroundColor(.primary.opacity(0.5))
-                            .frame(width: 24, height: 24)
-                    }
+                    
+                    Spacer()
+                    
+                    Text("\(volumePercentage)%")
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .monospacedDigit()
+                        .lineLimit(1)
+                        .foregroundStyle(.secondary)
+                        .frame(height: 20)
+                        .padding(.horizontal, 6)
+                        .background(.quaternary, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
                 }
                 .padding(.horizontal, 16)
-                .padding(.bottom, 16)
+                .padding(.top, 14)
+                
+                // Volume Slider Section
+                HStack(spacing: 10) {
+                    // Mute Button
+                    Button(action: { audioManager.toggleMute() }) {
+                        Image(systemName: volumeIcon)
+                            .font(.system(size: 14))
+                            .foregroundStyle(audioManager.isMuted ? Color.red : Color.secondary)
+                            .frame(width: 20, height: 20)
+                    }
+                    .buttonStyle(.plain)
+                    .focusable(false)
+                    .focusEffectDisabled()
+                    .help(audioManager.isMuted ? "Unmute" : "Mute")
+                    .frame(width: 20, height: 20)
+                    
+                    // Native Volume Slider
+                    Slider(
+                        value: Binding(
+                            get: { audioManager.currentVolume },
+                            set: { audioManager.setCurrentVolume($0) }
+                        ),
+                        in: 0 ... 1
+                    )
+                    .tint(audioManager.isMuted ? .red : .white)
+                    .focusEffectDisabled()
+                    .frame(height: 20)
+                    
+                    // Max Volume Icon
+                    Image(systemName: "speaker.wave.3.fill")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 20, height: 20)
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 14)
             }
-            .background(Color(NSColor.controlBackgroundColor).opacity(0.5))
             
             Divider()
             
@@ -121,24 +98,31 @@ struct ContentView: View {
                 HStack {
                     Label("Output Devices", systemImage: "speaker.wave.2")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     
                     Spacer()
                     
                     Text("\(audioManager.outputDevices.count)")
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.secondary)
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color.secondary.opacity(0.15))
-                        .cornerRadius(4)
+                        .background(.quaternary, in: RoundedRectangle(cornerRadius: 4, style: .continuous))
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
                 
                 // Devices List
-                ScrollView {
-                    VStack(spacing: 1) {
+                if audioManager.outputDevices.isEmpty {
+                    Text("No Output Devices Found")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, minHeight: 28)
+                        .padding(.horizontal, 8)
+                        .padding(.bottom, 4)
+                } else {
+                    VStack(spacing: 2) {
                         ForEach(audioManager.outputDevices, id: \.id) { device in
                             DeviceRow(
                                 device: device,
@@ -153,12 +137,12 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 8)
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 4)
                 }
             }
         }
-        .frame(width: 320, height: 420)
-        .background(VisualEffectView())
+        .frame(width: 320)
         .onAppear {
             audioManager.refreshDevices()
             audioManager.refreshCurrentDevice()
@@ -168,6 +152,7 @@ struct ContentView: View {
             audioManager.refreshCurrentDevice()
         }
         .focusable()
+        .focusEffectDisabled()
         .onKeyPress { press in
             switch press.key {
             case .upArrow:
@@ -198,101 +183,44 @@ struct DeviceRow: View {
     let isHovered: Bool
     let action: () -> Void
     
-    private var deviceIcon: String {
-        let lowercasedName = device.name.lowercased()
-        
-        if lowercasedName.contains("airpods") {
-            return "airpodspro"
-        } else if lowercasedName.contains("headphone") {
-            return "headphones"
-        } else if lowercasedName.contains("bluetooth") {
-            return "wave.3.right"
-        } else if lowercasedName.contains("hdmi") || lowercasedName.contains("display") {
-            return "tv"
-        } else if lowercasedName.contains("usb") {
-            return "cable.connector"
-        } else if lowercasedName.contains("aggregate") {
-            return "square.stack.3d.up"
-        } else if lowercasedName.contains("mac") || lowercasedName.contains("speaker") {
-            return "macbook.and.visionpro"
-        } else {
-            return "hifispeaker"
-        }
-    }
-    
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 // Selection Indicator
-                ZStack {
-                    Circle()
-                        .fill(isSelected ? Color.accentColor : Color.clear)
-                        .frame(width: 20, height: 20)
-                    
-                    if isSelected {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.blue)
-                    } else {
-                        Circle()
-                            .stroke(Color.primary.opacity(0.3), lineWidth: 1.5)
-                            .frame(width: 20, height: 20)
-                    }
-                }
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 15))
+                    .foregroundStyle(isHovered ? Color.white : (isSelected ? Color.accentColor : Color.secondary.opacity(0.4)))
+                    .frame(width: 16, height: 20)
                 
                 // Device Icon
-                Image(systemName: deviceIcon)
-                    .font(.system(size: 16))
-                    .frame(width: 24)
+                Image(systemName: device.iconName)
+                    .font(.system(size: 15))
+                    .foregroundStyle(isHovered ? Color.white : (isSelected ? Color.white : Color.secondary))
+                    .frame(width: 20, height: 20)
                 
                 // Device Name
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(device.name)
-                        .font(.system(size: 13, weight: isSelected ? .medium : .regular))
-                        .foregroundColor(isSelected ? .primary : .primary.opacity(0.9))
-                        .lineLimit(1)
-                    
-                    if isSelected {
-                        Text("Active")
-                            .font(.system(size: 10))
-                            .foregroundColor(.blue)
-                    }
-                }
+                Text(device.name)
+                    .font(.system(size: 13, weight: isSelected ? .medium : .regular))
+                    .foregroundStyle(isHovered ? Color.white : (isSelected ? Color.primary : Color.primary.opacity(0.85)))
+                    .lineLimit(1)
+                    .frame(height: 20)
                 
                 Spacer()
-                
-                // Connected indicator
-                if isSelected {
-                    Image(systemName: "dot.radiowaves.left.and.right")
-                        .font(.system(size: 12))
-                        .foregroundColor(.green)
-                }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
             .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(isHovered ? Color.primary.opacity(0.06) : Color.clear)
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(isHovered ? Color.accentColor : (isSelected ? Color.accentColor.opacity(0.1) : Color.clear))
             )
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .focusable(false)
+        .focusEffectDisabled()
     }
-}
-
-struct VisualEffectView: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSVisualEffectView {
-        let view = NSVisualEffectView()
-        view.material = .hudWindow
-        view.blendingMode = .behindWindow
-        view.state = .active
-        return view
-    }
-    
-    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
 }
 
 #Preview {
     ContentView()
-        .preferredColorScheme(.dark)
 }
