@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import MediaRemoteAdapter
 
 struct ContentView: View {
     @ObservedObject private var audioManager = AudioDeviceManager.shared
-    @StateObject private var mediaManager = MediaManager.shared
     @State private var isHoveringSlider = false
     @State private var hoveredDevice: AudioDevice?
     
@@ -118,11 +116,6 @@ struct ContentView: View {
             
             Divider()
             
-            // Media Control Section
-            MediaControlView(mediaManager: mediaManager)
-            
-            Divider()
-            
             // Devices List Section
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
@@ -164,7 +157,7 @@ struct ContentView: View {
                 }
             }
         }
-        .frame(width: 320, height: 540)
+        .frame(width: 320, height: 420)
         .background(VisualEffectView())
         .onAppear {
             audioManager.refreshDevices()
@@ -196,83 +189,6 @@ struct ContentView: View {
                 return .ignored
             }
         }
-    }
-}
-
-struct MediaControlView: View {
-    @ObservedObject var mediaManager: MediaManager
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            if let trackTitle = mediaManager.trackTitle, !trackTitle.isEmpty {
-                HStack(spacing: 12) {
-                    // Album Artwork
-                    if let artwork = mediaManager.trackArtwork {
-                        Image(nsImage: artwork)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(6)
-                            .shadow(color: .black.opacity(0.2), radius: 3, y: 1)
-                    } else {
-                        RoundedRectangle(cornerRadius: 6)
-                            .fill(Color.secondary.opacity(0.15))
-                            .frame(width: 50, height: 50)
-                            .overlay(
-                                Image(systemName: "music.note")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.secondary)
-                            )
-                    }
-                    
-                    // Track Info
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(trackTitle)
-                            .font(.system(size: 14, weight: .semibold))
-                            .lineLimit(1)
-                        
-                        if let artist = mediaManager.trackArtist, !artist.isEmpty {
-                            Text(artist)
-                                .font(.system(size: 12))
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        }
-                    }
-                    
-                    Spacer()
-                }
-                
-                // Playback Controls
-                HStack(spacing: 24) {
-                    Button(action: { mediaManager.previousTrack() }) {
-                        Image(systemName: "backward.fill")
-                            .font(.system(size: 20))
-                    }
-                    .buttonStyle(.plain)
-                    
-                    Button(action: { mediaManager.togglePlayPause() }) {
-                        Image(systemName: mediaManager.isPlaying ? "pause.fill" : "play.fill")
-                            .font(.system(size: 28))
-                            .frame(width: 30, height: 30)
-                    }
-                    .buttonStyle(.plain)
-                    
-                    Button(action: { mediaManager.nextTrack() }) {
-                        Image(systemName: "forward.fill")
-                            .font(.system(size: 20))
-                    }
-                    .buttonStyle(.plain)
-                }
-            } else {
-                Text("No Music Playing")
-                    .font(.system(size: 13))
-                    .foregroundColor(.secondary)
-                    .padding(.vertical, 20)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(Color(NSColor.controlBackgroundColor).opacity(0.5))
     }
 }
 
