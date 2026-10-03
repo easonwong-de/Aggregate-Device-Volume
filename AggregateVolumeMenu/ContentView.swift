@@ -31,7 +31,7 @@ struct ContentView: View {
                 // Current Device Display
                 HStack {
                     Image(systemName: audioManager.currentDevice?.iconName ?? "hifispeaker")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.primary)
                         .font(.system(size: 14))
                         .frame(width: 20, height: 20)
                     
@@ -77,7 +77,7 @@ struct ContentView: View {
                         ),
                         in: 0 ... 1
                     )
-                    .tint(audioManager.isMuted ? .red : .white)
+                    .tint(audioManager.isMuted ? Color.red : Color.primary)
                     .focusEffectDisabled()
                     .frame(height: 20)
                     
@@ -178,6 +178,7 @@ struct ContentView: View {
 }
 
 struct DeviceRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let device: AudioDevice
     let isSelected: Bool
     let isHovered: Bool
@@ -186,33 +187,31 @@ struct DeviceRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 10) {
-                // Selection Indicator
-                Image(systemName: "checkmark")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .opacity(isSelected ? 1 : 0)
-                    .frame(width: 16, height: 20)
-                
-                // Device Icon
-                Image(systemName: device.iconName)
-                    .font(.system(size: 15))
-                    .foregroundStyle(isHovered ? Color.white : (isSelected ? Color.white : Color.secondary))
-                    .frame(width: 20, height: 20)
+                // Device Icon Badge
+                ZStack {
+                    Circle()
+                        .fill(isSelected ? Color.accentColor : Color.primary.opacity(0.08))
+                    
+                    Image(systemName: device.iconName)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(isSelected ? Color.white : Color.secondary)
+                }
+                .frame(width: 26, height: 26)
                 
                 // Device Name
                 Text(device.name)
                     .font(.system(size: 13, weight: isSelected ? .medium : .regular))
-                    .foregroundStyle(isHovered ? Color.white : (isSelected ? Color.primary : Color.primary.opacity(0.85)))
+                    .foregroundStyle(isSelected || isHovered ? Color.primary : Color.primary.opacity(0.85))
                     .lineLimit(1)
-                    .frame(height: 20)
+                    .frame(height: 26)
                 
                 Spacer()
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 4)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isHovered ? Color.accentColor : Color.clear)
+                    .fill(isHovered ? (colorScheme == .dark ? Color.white.opacity(0.12) : Color.black.opacity(0.08)) : Color.clear)
             )
             .contentShape(Rectangle())
         }
