@@ -1,0 +1,56 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - "v*"
+    workflow_dispatch:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+
+jobs:
+    build:
+        name: Build and Release
+        runs-on: macos-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v7
+
+            - name: Build AggregateVolumeMenu
+              run: |
+                  xcodebuild clean build \
+                    -project AggregateVolumeMenu.xcodeproj \
+                    -scheme AggregateVolumeMenu \
+                    -configuration Release \
+                    -derivedDataPath ./build/derivedData \
+                    CONFIGURATION_BUILD_DIR=./build/output \
+                    CODE_SIGN_IDENTITY="-" \
+                    CODE_SIGNING_REQUIRED=NO
+
+
+            - name: Create ZIP archive
+              run: |
+                  cd ./build/output
+                  zip -qry ../AggregateVolumeMenu.zip AggregateVolumeMenu.app
+
+            - name: Compute SHA-256
+              run: |
+                  shasum -a 256 ./build/AggregateVolumeMenu.zip > ./build/AggregateVolumeMenu.zip.sha256
+                  cat ./build/AggregateVolumeMenu.zip.sha256
+
+            - name: Upload Release Assets
+              uses: softprops/action-gh-release@v3
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                  files: |
+                      ./build/AggregateVolumeMenu.zip
+                      ./build/AggregateVolumeMenu.zip.sha256
+                  draft: false
+                  prerelease: false
+                  generate_release_notes: true
+
