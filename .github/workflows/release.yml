@@ -38,14 +38,20 @@ jobs:
 
             - name: Compute SHA-256
               run: |
-                  shasum -a 256 ./build/AggregateVolumeMenu.zip > ./build/AggregateVolumeMenu.zip.sha256
+                  shasum -a 256 ./build/AggregateVolumeMenu.zip > \
+                      ./build/AggregateVolumeMenu.zip.sha256
                   cat ./build/AggregateVolumeMenu.zip.sha256
+                  SHA256=$(awk '{print $1}' \
+                      ./build/AggregateVolumeMenu.zip.sha256)
+                  echo "SHA256=${SHA256}" >> "$GITHUB_ENV"
 
             - name: Create Release and Upload Assets
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  VERSION=$(awk -F '=' '/MARKETING_VERSION/ {gsub(/[ ;]/, "", $2); print $2; exit}' AggregateVolumeMenu.xcodeproj/project.pbxproj)
+                  VERSION=$(awk -F '=' '/MARKETING_VERSION/ {gsub(/[ ;]/, "", $2); print $2; exit}' \
+                      AggregateVolumeMenu.xcodeproj/project.pbxproj)
+                  echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
                   TAG="v${VERSION}"
 
                   if gh release view "${TAG}" >/dev/null 2>&1; then
@@ -61,4 +67,35 @@ jobs:
                           ./build/AggregateVolumeMenu.zip.sha256 \
                           --title "${TAG}" \
                           --generate-notes
+                  fi
+
+            - name: Checkout Homebrew tap
+              uses: actions/checkout@v7
+              with:
+                  repository: easonwong-de/homebrew-tap
+                  token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+                  path: homebrew-tap
+
+            - name: Update Homebrew Cask
+              run: |
+                  cask_file="homebrew-tap/Casks/aggregate-volume-menu.rb"
+
+                  sed -E \
+                      -e "s/version [\"'].*[\"']/version \"${VERSION}\"/" \
+                      -e "s/sha256 (:no_check|[\"'].*[\"'])/sha256 \"${SHA256}\"/" \
+                      "$cask_file" > "${cask_file}.tmp"
+                  mv "${cask_file}.tmp" "$cask_file"
+
+                  cd homebrew-tap
+                  git config user.name "github-actions[bot]"
+                  git config user.email \
+                      "github-actions[bot]@users.noreply.github.com"
+
+                  if ! git diff --quiet -- Casks/aggregate-volume-menu.rb; then
+                      git add Casks/aggregate-volume-menu.rb
+                      git commit -m \
+                          "chore(cask): update aggregate-volume-menu to ${VERSION}"
+                      git push origin HEAD:main
+                  else
+                      echo "Cask is already up to date."
                   fi
