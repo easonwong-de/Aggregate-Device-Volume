@@ -1,3 +1,13 @@
+Fork of [gurhanpolat/AggregateVolumeMenu](https://github.com/gurhanpolat/AggregateVolumeMenu).
+
+- Native macOS controls and styling
+- Removed animation dependencies and media playback controls
+- Install via Homebrew: `brew install --cask easonwong-de/tap/aggregate-volume-menu`
+
+<img width="369" height="358" src="https://github.com/user-attachments/assets/4291797f-e464-4a13-9334-e82c0f97c651" />
+
+---
+
 # AggregateVolumeMenu
 
 A simple macOS menu bar application that allows you to control the volume of your selected output device, including Aggregate Devices, right from your menu bar.
