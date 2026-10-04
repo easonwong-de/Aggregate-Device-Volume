@@ -20,5 +20,5 @@ xcodebuild clean build \
   zip -qry "${ZIP_FILE}" "AggregateVolumeMenu.app"
 )
 
-shasum -a 256 "${ZIP_FILE}" > "${ZIP_FILE}.sha256"
+shasum -a 256 "${ZIP_FILE}" >"${ZIP_FILE}.sha256"
 cat "${ZIP_FILE}.sha256"

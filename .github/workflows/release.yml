@@ -10,7 +10,6 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
-
 jobs:
     build:
         name: Build and Release
@@ -32,7 +31,6 @@ jobs:
                     CODE_SIGN_IDENTITY="-" \
                     CODE_SIGNING_REQUIRED=NO
 
-
             - name: Create ZIP archive
               run: |
                   cd ./build/output
@@ -53,4 +51,3 @@ jobs:
                   draft: false
                   prerelease: false
                   generate_release_notes: true
-
