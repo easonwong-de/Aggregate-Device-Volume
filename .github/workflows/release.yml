@@ -34,7 +34,7 @@ jobs:
             - name: Create ZIP archive
               run: |
                   cd ./build/output
-                  zip -qry ../AggregateVolumeMenu.zip AggregateVolumeMenu.app
+                  zip -qry ../AggregateVolumeMenu.zip "Aggregate Device Volume.app"
 
             - name: Compute SHA-256
               run: |

@@ -17,7 +17,7 @@ xcodebuild clean build \
 
 (
   cd "${OUTPUT_DIR}"
-  zip -qry "${ZIP_FILE}" "AggregateVolumeMenu.app"
+  zip -qry "${ZIP_FILE}" "Aggregate Device Volume.app"
 )
 
 shasum -a 256 "${ZIP_FILE}" >"${ZIP_FILE}.sha256"
