@@ -41,13 +41,24 @@ jobs:
                   shasum -a 256 ./build/AggregateVolumeMenu.zip > ./build/AggregateVolumeMenu.zip.sha256
                   cat ./build/AggregateVolumeMenu.zip.sha256
 
-            - name: Upload Release Assets
-              uses: softprops/action-gh-release@v3
-              if: startsWith(github.ref, 'refs/tags/')
-              with:
-                  files: |
-                      ./build/AggregateVolumeMenu.zip
-                      ./build/AggregateVolumeMenu.zip.sha256
-                  draft: false
-                  prerelease: false
-                  generate_release_notes: true
+            - name: Create Release and Upload Assets
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  VERSION=$(awk -F '=' '/MARKETING_VERSION/ {gsub(/[ ;]/, "", $2); print $2; exit}' AggregateVolumeMenu.xcodeproj/project.pbxproj)
+                  TAG="v${VERSION}"
+
+                  if gh release view "${TAG}" >/dev/null 2>&1; then
+                      echo "Release ${TAG} already exists. Uploading assets..."
+                      gh release upload "${TAG}" \
+                          ./build/AggregateVolumeMenu.zip \
+                          ./build/AggregateVolumeMenu.zip.sha256 \
+                          --clobber
+                  else
+                      echo "Creating release ${TAG}..."
+                      gh release create "${TAG}" \
+                          ./build/AggregateVolumeMenu.zip \
+                          ./build/AggregateVolumeMenu.zip.sha256 \
+                          --title "${TAG}" \
+                          --generate-notes
+                  fi
