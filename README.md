@@ -2,7 +2,7 @@ Fork of [gurhanpolat/AggregateVolumeMenu](https://github.com/gurhanpolat/Aggrega
 
 - Native macOS controls and styling
 - Removed animation dependencies and media playback controls
-- Install via Homebrew: `brew install --cask easonwong-de/tap/aggregate-volume-menu`
+- Install via Homebrew: `brew install --cask easonwong-de/tap/aggregate-device-menu`
 
 <img width="382" height="331" alt="Screenshot" src="https://github.com/user-attachments/assets/3847c4ab-4490-4e67-b2ce-89a0edb76ae6" />
 

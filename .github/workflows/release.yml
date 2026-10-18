@@ -112,12 +112,21 @@ jobs:
 
             - name: Update Homebrew Cask
               run: |
-                  cask_file="homebrew-tap/Casks/aggregate-volume-menu.rb"
+                  old_cask_file="homebrew-tap/Casks/aggregate-volume-menu.rb"
+                  cask_file="homebrew-tap/Casks/aggregate-device-menu.rb"
+
+                  if [ -f "$old_cask_file" ] && [ ! -f "$cask_file" ]; then
+                      git -C homebrew-tap mv "Casks/aggregate-volume-menu.rb" "Casks/aggregate-device-menu.rb"
+                  fi
 
                   sed -E \
+                      -e "s/cask [\"'].*[\"']/cask \"aggregate-device-menu\"/" \
+                      -e "s/name [\"'].*[\"']/name \"AggregateDeviceVolume\"/" \
                       -e "s/version [\"'].*[\"']/version \"${VERSION}\"/" \
                       -e "s/sha256 (:no_check|[\"'].*[\"'])/sha256 \"${SHA256}\"/" \
                       -e "s/AggregateVolumeMenu\.zip/AggregateDeviceVolume.zip/g" \
+                      -e "s/de\.easonwong\.AggregateVolumeMenu/de.easonwong.AggregateDeviceVolume/g" \
+                      -e "s/depends_on macos: (.*)$/depends_on macos: :sonoma/g" \
                       "$cask_file" > "${cask_file}.tmp"
                   mv "${cask_file}.tmp" "$cask_file"
 
@@ -126,10 +135,10 @@ jobs:
                   git config user.email \
                       "github-actions[bot]@users.noreply.github.com"
 
-                  if ! git diff --quiet -- Casks/aggregate-volume-menu.rb; then
-                      git add Casks/aggregate-volume-menu.rb
+                  if ! git diff --quiet -- Casks/ || [ -n "$(git status --porcelain Casks/)" ]; then
+                      git add Casks/
                       git commit -m \
-                          "chore(cask): update aggregate-volume-menu to ${VERSION}"
+                          "chore(cask): update aggregate-device-menu to ${VERSION}"
                       git push origin HEAD:main
                   else
                       echo "Cask is already up to date."
