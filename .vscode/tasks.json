@@ -39,6 +39,12 @@
 			"command": "xcodebuild build -project AggregateDeviceVolume.xcodeproj -scheme AggregateDeviceVolume -configuration Release -derivedDataPath ./build/derivedData CONFIGURATION_BUILD_DIR=./build/Release CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO",
 			"group": "build",
 			"problemMatcher": []
+		},
+		{
+			"label": "Cleanup",
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/cleanup.sh",
+			"problemMatcher": []
 		}
 	]
 }
