@@ -4,7 +4,7 @@ Fork of [gurhanpolat/AggregateVolumeMenu](https://github.com/gurhanpolat/Aggrega
 - Removed animation dependencies and media playback controls
 - Install via Homebrew: `brew install --cask easonwong-de/tap/aggregate-device-volume`
 
-<img width="382" height="331" alt="Screenshot" src="https://github.com/user-attachments/assets/3847c4ab-4490-4e67-b2ce-89a0edb76ae6" />
+<img width="1377" height="817" alt="Screenshot" src="https://github.com/user-attachments/assets/a8b77c8c-a91f-44ba-bf13-6c6d8063761f" />
 
 ---
 
