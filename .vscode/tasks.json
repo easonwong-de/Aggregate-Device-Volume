@@ -13,9 +13,20 @@
 			}
 		},
 		{
-			"label": "Build (Debug)",
+			"label": "Compile (Debug)",
 			"type": "shell",
 			"command": "xcodebuild build -project AggregateDeviceVolume.xcodeproj -scheme AggregateDeviceVolume -configuration Debug -derivedDataPath ./build/derivedData CONFIGURATION_BUILD_DIR=./build/Debug CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Build (Debug)",
+			"type": "shell",
+			"command": "killall \"Aggregate Device Volume\" 2>/dev/null || true; open \"${workspaceFolder}/build/Debug/Aggregate Device Volume.app\"",
+			"dependsOn": "Compile (Debug)",
 			"group": {
 				"kind": "build",
 				"isDefault": true

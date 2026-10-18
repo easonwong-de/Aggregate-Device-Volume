@@ -8,7 +8,7 @@
 			"program": "${workspaceFolder}/build/Debug/Aggregate Device Volume.app/Contents/MacOS/Aggregate Device Volume",
 			"args": [],
 			"cwd": "${workspaceFolder}",
-			"preLaunchTask": "Build (Debug)"
+			"preLaunchTask": "Compile (Debug)"
 		}
 	]
 }
