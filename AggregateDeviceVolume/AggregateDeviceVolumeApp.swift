@@ -5,6 +5,7 @@
 //  Created by emre argana on 30.09.2025.
 //
 
+import ServiceManagement
 import SwiftUI
 
 @main
@@ -20,7 +21,9 @@ struct AggregateDeviceVolumeApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 	private var statusItem: NSStatusItem?
-	private var menu: NSMenu?
+	private var mainMenu: NSMenu?
+	private var contextMenu: NSMenu?
+	private var launchOnLoginMenuItem: NSMenuItem?
 	private var hostingView: NSHostingView<ContentView>?
 	private var audioManager = AudioDeviceManager.shared
 
@@ -36,11 +39,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 	private func setupStatusItem() {
 		statusItem = NSStatusBar.system.statusItem(withLength: 30)
+		if let button = statusItem?.button {
+			button.target = self
+			button.action = #selector(handleStatusItemClick(_:))
+			button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+		}
 		updateMenuBarIcon()
-		setupMenu()
+		setupMenus()
 	}
 
-	private func setupMenu() {
+	private func setupMenus() {
+		setupMainMenu()
+		setupContextMenu()
+	}
+
+	private func setupMainMenu() {
 		let menu = NSMenu()
 		menu.delegate = self
 
@@ -49,21 +62,85 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		item.view = hosting
 		menu.addItem(item)
 
-		self.menu = menu
+		self.mainMenu = menu
 		hostingView = hosting
-		statusItem?.menu = menu
+	}
+
+	private func setupContextMenu() {
+		let menu = NSMenu()
+		menu.delegate = self
+
+		let launchItem = NSMenuItem(
+			title: "Turn on Launch on Login",
+			action: #selector(toggleLaunchOnLogin),
+			keyEquivalent: ""
+		)
+		launchItem.target = self
+		menu.addItem(launchItem)
+		self.launchOnLoginMenuItem = launchItem
+
+		let quitItem = NSMenuItem(
+			title: "Quit",
+			action: #selector(quitApp),
+			keyEquivalent: "q"
+		)
+		quitItem.target = self
+		menu.addItem(quitItem)
+
+		self.contextMenu = menu
+		updateContextMenu()
+	}
+
+	@objc private func handleStatusItemClick(_ sender: NSStatusBarButton) {
+		guard let event = NSApp.currentEvent else { return }
+
+		let isRightClick = event.type == .rightMouseUp || event.modifierFlags.contains(.control)
+		let targetMenu = isRightClick ? contextMenu : mainMenu
+
+		statusItem?.menu = targetMenu
+		statusItem?.button?.performClick(nil)
 	}
 
 	func menuWillOpen(_ menu: NSMenu) {
-		audioManager.refreshDevices()
-		audioManager.refreshCurrentDevice()
-		updateMenuBarIcon()
+		if menu == mainMenu {
+			audioManager.refreshDevices()
+			audioManager.refreshCurrentDevice()
+			updateMenuBarIcon()
 
-		if let hostingView = hostingView {
-			hostingView.layoutSubtreeIfNeeded()
-			let fittingSize = hostingView.fittingSize
-			hostingView.frame = NSRect(x: 0, y: 0, width: 320, height: ceil(fittingSize.height))
+			if let hostingView = hostingView {
+				hostingView.layoutSubtreeIfNeeded()
+				let fittingSize = hostingView.fittingSize
+				hostingView.frame = NSRect(x: 0, y: 0, width: 320, height: ceil(fittingSize.height))
+			}
+		} else if menu == contextMenu {
+			updateContextMenu()
 		}
+	}
+
+	func menuDidClose(_ menu: NSMenu) {
+		statusItem?.menu = nil
+	}
+
+	private func updateContextMenu() {
+		let isEnabled = SMAppService.mainApp.status == .enabled
+		launchOnLoginMenuItem?.title = isEnabled ? "Turn off Launch on Login" : "Turn on Launch on Login"
+	}
+
+	@objc private func toggleLaunchOnLogin() {
+		do {
+			if SMAppService.mainApp.status == .enabled {
+				try SMAppService.mainApp.unregister()
+			} else {
+				try SMAppService.mainApp.register()
+			}
+		} catch {
+			NSLog("Failed to toggle launch on login: %@", error.localizedDescription)
+		}
+		updateContextMenu()
+	}
+
+	@objc private func quitApp() {
+		NSApp.terminate(nil)
 	}
 
 	private func observeVolumeChangeNotifications() {
