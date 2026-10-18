@@ -1,19 +1,16 @@
 name: Release
 
 on:
-    push:
-        tags:
-            - "v*"
     workflow_dispatch:
         inputs:
             version:
                 description: "Version to bump and release (e.g. 1.0.0)"
-                required: false
+                required: true
                 type: string
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+    cancel-in-progress: false
 
 jobs:
     build:
@@ -28,42 +25,36 @@ jobs:
             - name: Determine version and bump
               run: |
                   INPUT_VERSION="${{ inputs.version }}"
-                  if [ -n "${INPUT_VERSION}" ]; then
-                      VERSION="${INPUT_VERSION#v}"
-                      if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
-                          echo "Invalid version format: ${VERSION}" >&2
-                          exit 1
-                      fi
-
-                      TAG="v${VERSION}"
-                      if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q "${TAG}"; then
-                          echo "Tag ${TAG} already exists on remote." >&2
-                          exit 1
-                      fi
-
-                      sed -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = ${VERSION};/g" \
-                          AggregateVolumeMenu.xcodeproj/project.pbxproj > \
-                          AggregateVolumeMenu.xcodeproj/project.pbxproj.tmp
-                      mv AggregateVolumeMenu.xcodeproj/project.pbxproj.tmp \
-                          AggregateVolumeMenu.xcodeproj/project.pbxproj
-
-                      git config user.name "github-actions[bot]"
-                      git config user.email \
-                          "github-actions[bot]@users.noreply.github.com"
-
-                      if ! git diff --quiet -- AggregateVolumeMenu.xcodeproj/project.pbxproj; then
-                          git add AggregateVolumeMenu.xcodeproj/project.pbxproj
-                          git commit -m "chore: bump version to ${VERSION}"
-                          git push origin "HEAD:${{ github.ref_name }}"
-                      fi
-
-                      git tag "${TAG}"
-                      git push origin "${TAG}"
-                  else
-                      VERSION=$(awk -F '=' '/MARKETING_VERSION/ {gsub(/[ ;]/, "", $2); print $2; exit}' \
-                          AggregateVolumeMenu.xcodeproj/project.pbxproj)
-                      TAG="v${VERSION}"
+                  VERSION="${INPUT_VERSION#v}"
+                  if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+                      echo "Invalid version format: ${VERSION}" >&2
+                      exit 1
                   fi
+
+                  TAG="v${VERSION}"
+                  if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q "${TAG}"; then
+                      echo "Tag ${TAG} already exists on remote." >&2
+                      exit 1
+                  fi
+
+                  sed -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = ${VERSION};/g" \
+                      AggregateVolumeMenu.xcodeproj/project.pbxproj > \
+                      AggregateVolumeMenu.xcodeproj/project.pbxproj.tmp
+                  mv AggregateVolumeMenu.xcodeproj/project.pbxproj.tmp \
+                      AggregateVolumeMenu.xcodeproj/project.pbxproj
+
+                  git config user.name "github-actions[bot]"
+                  git config user.email \
+                      "github-actions[bot]@users.noreply.github.com"
+
+                  if ! git diff --quiet -- AggregateVolumeMenu.xcodeproj/project.pbxproj; then
+                      git add AggregateVolumeMenu.xcodeproj/project.pbxproj
+                      git commit -m "chore: bump version to ${VERSION}"
+                      git push origin "HEAD:${{ github.ref_name }}"
+                  fi
+
+                  git tag "${TAG}"
+                  git push origin "${TAG}"
 
                   echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
                   echo "TAG=${TAG}" >> "$GITHUB_ENV"

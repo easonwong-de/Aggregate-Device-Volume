@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Lint & Build
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Verify code formatting
+        run: |
+          xcrun swift-format lint --strict --parallel --recursive AggregateVolumeMenu/
+
+      - name: Build AggregateVolumeMenu
+        run: |
+          xcodebuild clean build \
+            -project AggregateVolumeMenu.xcodeproj \
+            -scheme AggregateVolumeMenu \
+            -configuration Release \
+            -derivedDataPath ./build/derivedData \
+            CONFIGURATION_BUILD_DIR=./build/output \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO

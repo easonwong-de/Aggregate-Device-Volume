@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug AggregateVolumeMenu",
+			"type": "lldb",
+			"request": "launch",
+			"program": "${workspaceFolder}/build/Debug/Aggregate Device Volume.app/Contents/MacOS/Aggregate Device Volume",
+			"args": [],
+			"cwd": "${workspaceFolder}",
+			"preLaunchTask": "Build (Debug)"
+		}
+	]
+}

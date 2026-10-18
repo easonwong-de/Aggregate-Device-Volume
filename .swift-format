@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "tabWidth": 4,
+  "indentation": {
+    "tabs": 1
+  },
+  "lineLength": 120,
+  "indentSwitchCaseLabels": false,
+  "maximumBlankLines": 1,
+  "respectsExistingLineBreaks": true,
+  "rules": {
+    "AlwaysUseLowerCamelCase": false
+  }
+}
