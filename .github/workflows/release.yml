@@ -38,17 +38,17 @@ jobs:
                   fi
 
                   sed -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = ${VERSION};/g" \
-                      AggregateVolumeMenu.xcodeproj/project.pbxproj > \
-                      AggregateVolumeMenu.xcodeproj/project.pbxproj.tmp
-                  mv AggregateVolumeMenu.xcodeproj/project.pbxproj.tmp \
-                      AggregateVolumeMenu.xcodeproj/project.pbxproj
+                      AggregateDeviceVolume.xcodeproj/project.pbxproj > \
+                      AggregateDeviceVolume.xcodeproj/project.pbxproj.tmp
+                  mv AggregateDeviceVolume.xcodeproj/project.pbxproj.tmp \
+                      AggregateDeviceVolume.xcodeproj/project.pbxproj
 
                   git config user.name "github-actions[bot]"
                   git config user.email \
                       "github-actions[bot]@users.noreply.github.com"
 
-                  if ! git diff --quiet -- AggregateVolumeMenu.xcodeproj/project.pbxproj; then
-                      git add AggregateVolumeMenu.xcodeproj/project.pbxproj
+                  if ! git diff --quiet -- AggregateDeviceVolume.xcodeproj/project.pbxproj; then
+                      git add AggregateDeviceVolume.xcodeproj/project.pbxproj
                       git commit -m "chore: bump version to ${VERSION}"
                       git push origin "HEAD:${{ github.ref_name }}"
                   fi
@@ -59,11 +59,11 @@ jobs:
                   echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
                   echo "TAG=${TAG}" >> "$GITHUB_ENV"
 
-            - name: Build AggregateVolumeMenu
+            - name: Build AggregateDeviceVolume
               run: |
                   xcodebuild clean build \
-                    -project AggregateVolumeMenu.xcodeproj \
-                    -scheme AggregateVolumeMenu \
+                    -project AggregateDeviceVolume.xcodeproj \
+                    -scheme AggregateDeviceVolume \
                     -configuration Release \
                     -derivedDataPath ./build/derivedData \
                     CONFIGURATION_BUILD_DIR=./build/output \
@@ -73,15 +73,15 @@ jobs:
             - name: Create ZIP archive
               run: |
                   cd ./build/output
-                  zip -qry ../AggregateVolumeMenu.zip "Aggregate Device Volume.app"
+                  zip -qry ../AggregateDeviceVolume.zip "Aggregate Device Volume.app"
 
             - name: Compute SHA-256
               run: |
-                  shasum -a 256 ./build/AggregateVolumeMenu.zip > \
-                      ./build/AggregateVolumeMenu.zip.sha256
-                  cat ./build/AggregateVolumeMenu.zip.sha256
+                  shasum -a 256 ./build/AggregateDeviceVolume.zip > \
+                      ./build/AggregateDeviceVolume.zip.sha256
+                  cat ./build/AggregateDeviceVolume.zip.sha256
                   SHA256=$(awk '{print $1}' \
-                      ./build/AggregateVolumeMenu.zip.sha256)
+                      ./build/AggregateDeviceVolume.zip.sha256)
                   echo "SHA256=${SHA256}" >> "$GITHUB_ENV"
 
             - name: Create Release and Upload Assets
@@ -91,14 +91,14 @@ jobs:
                   if gh release view "${TAG}" >/dev/null 2>&1; then
                       echo "Release ${TAG} already exists. Uploading assets..."
                       gh release upload "${TAG}" \
-                          ./build/AggregateVolumeMenu.zip \
-                          ./build/AggregateVolumeMenu.zip.sha256 \
+                          ./build/AggregateDeviceVolume.zip \
+                          ./build/AggregateDeviceVolume.zip.sha256 \
                           --clobber
                   else
                       echo "Creating release ${TAG}..."
                       gh release create "${TAG}" \
-                          ./build/AggregateVolumeMenu.zip \
-                          ./build/AggregateVolumeMenu.zip.sha256 \
+                          ./build/AggregateDeviceVolume.zip \
+                          ./build/AggregateDeviceVolume.zip.sha256 \
                           --title "${TAG}" \
                           --generate-notes
                   fi
@@ -117,6 +117,7 @@ jobs:
                   sed -E \
                       -e "s/version [\"'].*[\"']/version \"${VERSION}\"/" \
                       -e "s/sha256 (:no_check|[\"'].*[\"'])/sha256 \"${SHA256}\"/" \
+                      -e "s/AggregateVolumeMenu\.zip/AggregateDeviceVolume.zip/g" \
                       "$cask_file" > "${cask_file}.tmp"
                   mv "${cask_file}.tmp" "$cask_file"
 

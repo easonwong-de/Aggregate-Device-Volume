@@ -4,13 +4,13 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR="${PROJECT_DIR}/build"
 OUTPUT_DIR="${BUILD_DIR}/output"
-ZIP_FILE="${BUILD_DIR}/AggregateVolumeMenu.zip"
+ZIP_FILE="${BUILD_DIR}/AggregateDeviceVolume.zip"
 
 mkdir -p "${BUILD_DIR}"
 
 xcodebuild clean build \
-  -project "${PROJECT_DIR}/AggregateVolumeMenu.xcodeproj" \
-  -scheme "AggregateVolumeMenu" \
+  -project "${PROJECT_DIR}/AggregateDeviceVolume.xcodeproj" \
+  -scheme "AggregateDeviceVolume" \
   -configuration "Release" \
   -derivedDataPath "${BUILD_DIR}/derivedData" \
   CONFIGURATION_BUILD_DIR="${OUTPUT_DIR}"

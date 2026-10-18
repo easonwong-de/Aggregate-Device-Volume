@@ -17,8 +17,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CABDF1142590FD56006F420A"
                BuildableName = "Aggregate Device Volume.app"
-               BlueprintName = "AggregateVolumeMenu"
-               ReferencedContainer = "container:AggregateVolumeMenu.xcodeproj">
+               BlueprintName = "AggregateDeviceVolume"
+               ReferencedContainer = "container:AggregateDeviceVolume.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,8 +46,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CABDF1142590FD56006F420A"
             BuildableName = "Aggregate Device Volume.app"
-            BlueprintName = "AggregateVolumeMenu"
-            ReferencedContainer = "container:AggregateVolumeMenu.xcodeproj">
+            BlueprintName = "AggregateDeviceVolume"
+            ReferencedContainer = "container:AggregateDeviceVolume.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CABDF1142590FD56006F420A"
             BuildableName = "Aggregate Device Volume.app"
-            BlueprintName = "AggregateVolumeMenu"
-            ReferencedContainer = "container:AggregateVolumeMenu.xcodeproj">
+            BlueprintName = "AggregateDeviceVolume"
+            ReferencedContainer = "container:AggregateDeviceVolume.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

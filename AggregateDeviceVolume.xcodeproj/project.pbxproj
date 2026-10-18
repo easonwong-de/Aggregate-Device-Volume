@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		018ECBF22E8C382400210E72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018ECBF12E8C382000210E72 /* ContentView.swift */; };
-		018ECBF62E8C3A8600210E72 /* AggregateVolumeMenuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018ECBF52E8C3A8000210E72 /* AggregateVolumeMenuApp.swift */; };
+		018ECBF62E8C3A8600210E72 /* AggregateDeviceVolumeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018ECBF52E8C3A8000210E72 /* AggregateDeviceVolumeApp.swift */; };
 		9B7739A330630D4100F5F58D /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 9B7739A230630D4100F5F58D /* AppIcon.icon */; };
 		CABDF11D2590FD57006F420A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CABDF11C2590FD57006F420A /* Assets.xcassets */; };
 		CAF43D012E89C85A002EAABE /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF43CFF2E89C85A002EAABE /* AudioDevice.swift */; };
@@ -17,13 +17,13 @@
 
 /* Begin PBXFileReference section */
 		018ECBF12E8C382000210E72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		018ECBF52E8C3A8000210E72 /* AggregateVolumeMenuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregateVolumeMenuApp.swift; sourceTree = "<group>"; };
+		018ECBF52E8C3A8000210E72 /* AggregateDeviceVolumeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregateDeviceVolumeApp.swift; sourceTree = "<group>"; };
 		9B7739A13062FEA600F5F58D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9B7739A230630D4100F5F58D /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		CABDF1152590FD56006F420A /* Aggregate Device Volume.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aggregate Device Volume.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CABDF11C2590FD57006F420A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CABDF1212590FD57006F420A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CABDF1222590FD57006F420A /* AggregateVolumeMenu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AggregateVolumeMenu.entitlements; sourceTree = "<group>"; };
+		CABDF1222590FD57006F420A /* AggregateDeviceVolume.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AggregateDeviceVolume.entitlements; sourceTree = "<group>"; };
 		CAF43CFF2E89C85A002EAABE /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		CAF43D002E89C85A002EAABE /* AudioDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -42,7 +42,7 @@
 		CABDF10C2590FD56006F420A = {
 			isa = PBXGroup;
 			children = (
-				CABDF1172590FD56006F420A /* AggregateVolumeMenu */,
+				CABDF1172590FD56006F420A /* AggregateDeviceVolume */,
 				9B7739A13062FEA600F5F58D /* README.md */,
 				CABDF1162590FD56006F420A /* Products */,
 			);
@@ -56,27 +56,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CABDF1172590FD56006F420A /* AggregateVolumeMenu */ = {
+		CABDF1172590FD56006F420A /* AggregateDeviceVolume */ = {
 			isa = PBXGroup;
 			children = (
 				9B7739A230630D4100F5F58D /* AppIcon.icon */,
-				018ECBF52E8C3A8000210E72 /* AggregateVolumeMenuApp.swift */,
+				018ECBF52E8C3A8000210E72 /* AggregateDeviceVolumeApp.swift */,
 				018ECBF12E8C382000210E72 /* ContentView.swift */,
 				CAF43CFF2E89C85A002EAABE /* AudioDevice.swift */,
 				CAF43D002E89C85A002EAABE /* AudioDeviceManager.swift */,
 				CABDF11C2590FD57006F420A /* Assets.xcassets */,
 				CABDF1212590FD57006F420A /* Info.plist */,
-				CABDF1222590FD57006F420A /* AggregateVolumeMenu.entitlements */,
+				CABDF1222590FD57006F420A /* AggregateDeviceVolume.entitlements */,
 			);
-			path = AggregateVolumeMenu;
+			path = AggregateDeviceVolume;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CABDF1142590FD56006F420A /* AggregateVolumeMenu */ = {
+		CABDF1142590FD56006F420A /* AggregateDeviceVolume */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CABDF1252590FD57006F420A /* Build configuration list for PBXNativeTarget "AggregateVolumeMenu" */;
+			buildConfigurationList = CABDF1252590FD57006F420A /* Build configuration list for PBXNativeTarget "AggregateDeviceVolume" */;
 			buildPhases = (
 				CABDF1112590FD56006F420A /* Sources */,
 				CABDF1122590FD56006F420A /* Frameworks */,
@@ -86,8 +86,8 @@
 			);
 			dependencies = (
 			);
-			name = AggregateVolumeMenu;
-			productName = AggregateVolumeMenu;
+			name = AggregateDeviceVolume;
+			productName = AggregateDeviceVolume;
 			productReference = CABDF1152590FD56006F420A /* Aggregate Device Volume.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -106,7 +106,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CABDF1102590FD56006F420A /* Build configuration list for PBXProject "AggregateVolumeMenu" */;
+			buildConfigurationList = CABDF1102590FD56006F420A /* Build configuration list for PBXProject "AggregateDeviceVolume" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -119,7 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CABDF1142590FD56006F420A /* AggregateVolumeMenu */,
+				CABDF1142590FD56006F420A /* AggregateDeviceVolume */,
 			);
 		};
 /* End PBXProject section */
@@ -144,7 +144,7 @@
 				018ECBF22E8C382400210E72 /* ContentView.swift in Sources */,
 				CAF43D012E89C85A002EAABE /* AudioDevice.swift in Sources */,
 				CAF43D022E89C85A002EAABE /* AudioDeviceManager.swift in Sources */,
-				018ECBF62E8C3A8600210E72 /* AggregateVolumeMenuApp.swift in Sources */,
+				018ECBF62E8C3A8600210E72 /* AggregateDeviceVolumeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,14 +286,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_ENTITLEMENTS = AggregateVolumeMenu/AggregateVolumeMenu.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AggregateDeviceVolume/AggregateDeviceVolume.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				INFOPLIST_FILE = AggregateVolumeMenu/Info.plist;
+				INFOPLIST_FILE = AggregateDeviceVolume/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Aggregate Device Volume";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -301,7 +301,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = de.easonwong.AggregateVolumeMenu;
+				PRODUCT_BUNDLE_IDENTIFIER = de.easonwong.AggregateDeviceVolume;
 				PRODUCT_NAME = "Aggregate Device Volume";
 				SWIFT_VERSION = 5.0;
 			};
@@ -313,14 +313,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_ENTITLEMENTS = AggregateVolumeMenu/AggregateVolumeMenu.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AggregateDeviceVolume/AggregateDeviceVolume.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				INFOPLIST_FILE = AggregateVolumeMenu/Info.plist;
+				INFOPLIST_FILE = AggregateDeviceVolume/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Aggregate Device Volume";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -328,7 +328,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = de.easonwong.AggregateVolumeMenu;
+				PRODUCT_BUNDLE_IDENTIFIER = de.easonwong.AggregateDeviceVolume;
 				PRODUCT_NAME = "Aggregate Device Volume";
 				SWIFT_VERSION = 5.0;
 			};
@@ -337,7 +337,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CABDF1102590FD56006F420A /* Build configuration list for PBXProject "AggregateVolumeMenu" */ = {
+		CABDF1102590FD56006F420A /* Build configuration list for PBXProject "AggregateDeviceVolume" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CABDF1232590FD57006F420A /* Debug */,
@@ -346,7 +346,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CABDF1252590FD57006F420A /* Build configuration list for PBXNativeTarget "AggregateVolumeMenu" */ = {
+		CABDF1252590FD57006F420A /* Build configuration list for PBXNativeTarget "AggregateDeviceVolume" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CABDF1262590FD57006F420A /* Debug */,

@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug AggregateVolumeMenu",
+			"name": "Debug AggregateDeviceVolume",
 			"type": "lldb",
 			"request": "launch",
 			"program": "${workspaceFolder}/build/Debug/Aggregate Device Volume.app/Contents/MacOS/Aggregate Device Volume",

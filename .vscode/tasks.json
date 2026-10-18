@@ -15,7 +15,7 @@
 		{
 			"label": "Build (Debug)",
 			"type": "shell",
-			"command": "xcodebuild build -project AggregateVolumeMenu.xcodeproj -scheme AggregateVolumeMenu -configuration Debug -derivedDataPath ./build/derivedData CONFIGURATION_BUILD_DIR=./build/Debug CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO",
+			"command": "xcodebuild build -project AggregateDeviceVolume.xcodeproj -scheme AggregateDeviceVolume -configuration Debug -derivedDataPath ./build/derivedData CONFIGURATION_BUILD_DIR=./build/Debug CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO",
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -25,7 +25,7 @@
 		{
 			"label": "Build (Release)",
 			"type": "shell",
-			"command": "xcodebuild build -project AggregateVolumeMenu.xcodeproj -scheme AggregateVolumeMenu -configuration Release -derivedDataPath ./build/derivedData CONFIGURATION_BUILD_DIR=./build/Release CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO",
+			"command": "xcodebuild build -project AggregateDeviceVolume.xcodeproj -scheme AggregateDeviceVolume -configuration Release -derivedDataPath ./build/derivedData CONFIGURATION_BUILD_DIR=./build/Release CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO",
 			"group": "build",
 			"problemMatcher": []
 		}

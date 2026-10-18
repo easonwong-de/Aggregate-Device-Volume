@@ -1,6 +1,6 @@
 //
-//  AggregateVolumeMenuApp.swift
-//  AggregateVolumeMenu
+//  AggregateDeviceVolumeApp.swift
+//  AggregateDeviceVolume
 //
 //  Created by emre argana on 30.09.2025.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct AggregateVolumeMenuApp: App {
+struct AggregateDeviceVolumeApp: App {
 	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
 	var body: some Scene {

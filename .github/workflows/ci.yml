@@ -22,13 +22,13 @@ jobs:
 
       - name: Verify code formatting
         run: |
-          xcrun swift-format lint --strict --parallel --recursive AggregateVolumeMenu/
+          xcrun swift-format lint --strict --parallel --recursive AggregateDeviceVolume/
 
-      - name: Build AggregateVolumeMenu
+      - name: Build AggregateDeviceVolume
         run: |
           xcodebuild clean build \
-            -project AggregateVolumeMenu.xcodeproj \
-            -scheme AggregateVolumeMenu \
+            -project AggregateDeviceVolume.xcodeproj \
+            -scheme AggregateDeviceVolume \
             -configuration Release \
             -derivedDataPath ./build/derivedData \
             CONFIGURATION_BUILD_DIR=./build/output \

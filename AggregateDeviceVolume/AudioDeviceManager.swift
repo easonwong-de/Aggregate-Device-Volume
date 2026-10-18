@@ -1,6 +1,6 @@
 //
 //  AudioDeviceManager.swift
-//  AggregateVolumeMenu
+//  AggregateDeviceVolume
 //
 //  Created by Gurhan Polat on 22.12.2020.
 //
